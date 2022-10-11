@@ -71,4 +71,4 @@ const animate = () => {
     requestAnimationFrame(animate);
 }
 
-animate()
+animate();
