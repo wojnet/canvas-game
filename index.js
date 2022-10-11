@@ -1,30 +1,49 @@
-import { CubePlayer } from "./players.js";
-
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
+//IMPORTING CLASSES & IMAGES
+import { CubePlayer, ImagePlayer } from "./players.js";
+import { imgBob } from "./textureManager.js";
 
 const WIDTH = 512;
 const HEIGHT = 512;
 
-const background = false;
+const [ canvas1, canvas2 ] = Array.from(document.querySelectorAll("canvas"));
 
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
+//CANVAS1 "FAR" CONFIG
+canvas1.width = WIDTH;
+canvas1.height = HEIGHT;
+const ctx1 = canvas1.getContext("2d");
 
-//CREATING PLAYER
-var player = new CubePlayer(128, 256, 64, 64, 2, "#FFA", ctx);
+//CANVAS2 "NEAR" CONFIG
+canvas2.width = WIDTH;
+canvas2.height = HEIGHT;
+const ctx2 = canvas2.getContext("2d");
 
+//LISTS OF GAME OBJECTS
+var playerList = [];
+var entityList = [];
+var blockList = [];
+
+//CREATING PLAYER(S)
+//==================
+//  You can use either CubePlayer or ImagePlayer class
+//  to create controlable (WASD) players!
+//  
+//  Parameters:
+//  new CubePlayer(x, y, width, height, speed, color, hp, context, defaultPlayerList);
+//  new ImagePlayer(x, y, width, height, speed, texture, hp, context, defaultPlayerList);
+//
+//  Just uncomment one of these samples to play:
+//  var player = new CubePlayer(128, 256, 64, 64, 3, "#FFA", 100, ctx1, playerList);
+//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+
+//GAME LOOP THINGS
 const update = () => {
-    player.update();
+    playerList.forEach(e => e.update());
 }
 
 const draw = () => {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    if (background) {
-        ctx.fillStyle = "#778";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-    player.draw();
+    ctx1.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+    playerList.forEach(e => e.draw());
 }
 
 const animate = () => {
