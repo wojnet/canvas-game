@@ -8,8 +8,34 @@ const HEIGHT = 512;
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
 
-var x = 0;
-var y = 0;
+class Player {
+    constructor(_x, _y, _w, _h, _color) {
+        this.x = _x;
+        this.y = _y;
+        this.w = _w;
+        this.h = _h;
+    }
+
+    update() {
+        // let hmove = right - left;
+        // let vmove = down - up;
+
+        // if (hmove != 0 && vmove != 0) {
+        //     x += hmove * speed / 1.4142;
+        //     y += vmove * speed / 1.4142;
+        // } else {
+        //     x += hmove * speed;
+        //     y += vmove * speed;
+        // }
+    }
+
+    draw() {
+        ctx.fillStyle = "#FFF";
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+};
+
+var player = new Player(0, 0, 64, 64, "#FFF");
 
 var speed = 3;
 
@@ -43,24 +69,12 @@ document.addEventListener("keyup", (e) => {
 });
 
 const update = () => {
-    let hmove = right - left;
-    let vmove = down - up;
-
-    if (hmove != 0 && vmove != 0) {
-        x += hmove * speed / 1.4142;
-        y += vmove * speed / 1.4142;
-    } else {
-        x += hmove * speed;
-        y += vmove * speed;
-    }
-
-    
+    player.update();
 }
 
 const draw = () => {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    ctx.fillStyle = "#FFF";
-    ctx.fillRect(x, y, 64, 64);
+    player.draw();
 }
 
 const animate = () => {
