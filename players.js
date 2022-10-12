@@ -1,5 +1,5 @@
 export class CubePlayer {
-    constructor(_x, _y, _w, _h, _speed, _color, _hp, _ctx, _list) {
+    constructor(_x, _y, _w, _h, _speed, _color, _hp, _ctx, _viewport, _list) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -12,6 +12,7 @@ export class CubePlayer {
         this.color = _color;
         this.hp = _hp;
         this.ctx = _ctx;
+        this.viewport = _viewport;
         this.up = 0;
         this.down = 0;
         this.left = 0;
@@ -56,7 +57,7 @@ export class CubePlayer {
 
     draw() {
         this.ctx.fillStyle = this.color;
-        this.ctx.fillRect(this.x, this.y, this.w, this.h);
+        this.ctx.fillRect(this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
     }
 
     addHp(_healthPoints) {
@@ -65,7 +66,7 @@ export class CubePlayer {
 };
 
 export class ImagePlayer {
-    constructor(_x, _y, _w, _h, _speed, _image, _hp, _ctx, _list) {
+    constructor(_x, _y, _w, _h, _speed, _image, _hp, _ctx, _viewport, _list) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -74,6 +75,7 @@ export class ImagePlayer {
         this.image = _image;
         this.hp = _hp;
         this.ctx = _ctx;
+        this.viewport = _viewport;
         this.up = 0;
         this.down = 0;
         this.left = 0;
@@ -114,7 +116,7 @@ export class ImagePlayer {
     }
 
     draw() {
-        this.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+        this.ctx.drawImage(this.image, this.x - this.viewport, this.y - this.viewport, this.w, this.h);
     }
 
     addHp(_healthPoints) {
