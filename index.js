@@ -44,12 +44,12 @@ var viewport = new Viewport(0, 0, 32);
 //
 //  Just uncomment one of these samples to play:
 
-var player = new CubePlayer(128, 64, 64, 64, 2, "pink", 100, ctxMain, viewport, playerList);
+// var player = new CubePlayer(128, 64, 64, 64, 2, "pink", 100, ctxMain, viewport, playerList);
 var bg = new Sprite(0, 0, 2000, 2000, okComputerBg, ctxBg, viewport, spriteList);
 //  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxMain, viewport, playerList);
 
 // JANOWY GRACZ
-// var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+ var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
 
 
 //GAME LOOP THINGS
