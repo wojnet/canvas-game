@@ -2,20 +2,20 @@
 import { CubePlayer, ImagePlayer } from "./players.js";
 import { imgBob } from "./textureManager.js";
 
-const WIDTH = 512;
-const HEIGHT = 512;
+const WIDTH = 256;
+const HEIGHT = 256;
 
-const [ canvas1, canvas2 ] = Array.from(document.querySelectorAll("canvas"));
+const [ canvasBg, canvasMain ] = Array.from(document.querySelectorAll("canvas"));
 
 //CANVAS1 "FAR" CONFIG
-canvas1.width = WIDTH;
-canvas1.height = HEIGHT;
-const ctx1 = canvas1.getContext("2d");
+canvasBg.width = WIDTH;
+canvasBg.height = HEIGHT;
+const ctxBg = canvasBg.getContext("2d");
 
 //CANVAS2 "NEAR" CONFIG
-canvas2.width = WIDTH;
-canvas2.height = HEIGHT;
-const ctx2 = canvas2.getContext("2d");
+canvasMain.width = WIDTH;
+canvasMain.height = HEIGHT;
+const ctxMain = canvasMain.getContext("2d");
 
 //LISTS OF GAME OBJECTS
 var playerList = [];
@@ -32,8 +32,8 @@ var blockList = [];
 //  new ImagePlayer(x, y, width, height, speed, texture, hp, context, defaultPlayerList);
 //
 //  Just uncomment one of these samples to play:
-//  var player = new CubePlayer(128, 256, 64, 64, 3, "#FFA", 100, ctx1, playerList);
-//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+var player = new CubePlayer(0, 0, 16, 16, 3, "#FFA", 100, ctxBg, playerList);
+//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxBg, playerList);
 
 //GAME LOOP THINGS
 const update = () => {
@@ -41,8 +41,8 @@ const update = () => {
 }
 
 const draw = () => {
-    ctx1.clearRect(0, 0, WIDTH, HEIGHT);
-    ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+    ctxBg.clearRect(0, 0, WIDTH, HEIGHT);
+    ctxMain.clearRect(0, 0, WIDTH, HEIGHT);
     playerList.forEach(e => e.draw());
 }
 
