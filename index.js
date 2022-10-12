@@ -33,7 +33,7 @@ var blockList = [];
 //
 //  Just uncomment one of these samples to play:
 //  var player = new CubePlayer(128, 256, 64, 64, 3, "#FFA", 100, ctx1, playerList);
-//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
 
 //GAME LOOP THINGS
 const update = () => {
