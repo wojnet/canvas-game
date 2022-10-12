@@ -32,8 +32,9 @@ var blockList = [];
 //  new ImagePlayer(x, y, width, height, speed, texture, hp, context, defaultPlayerList);
 //
 //  Just uncomment one of these samples to play:
-var player = new CubePlayer(0, 0, 16, 16, 3, "#FFA", 100, ctxBg, playerList);
-//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxBg, playerList);
+//  var player = new CubePlayer(128, 256, 64, 64, 3, "#FFA", 100, ctx1, playerList);
+  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+
 
 //GAME LOOP THINGS
 const update = () => {
