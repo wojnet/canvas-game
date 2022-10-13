@@ -19,20 +19,20 @@ export class CubePlayer {
         this.right = 0;
 
         document.addEventListener("keydown", (e) => {
-            switch(e.key) {
-                case "w": this.up = 1; break;
-                case "s": this.down = 1; break;
-                case "a": this.left = 1; break;
-                case "d": this.right = 1; break;
+            switch(e.code) {
+                case "KeyW": this.up = 1; break;
+                case "KeyS": this.down = 1; break;
+                case "KeyA": this.left = 1; break;
+                case "KeyD": this.right = 1; break;
             }
         });
         
         document.addEventListener("keyup", (e) => {
-            switch(e.key) {
-                case "w": this.up = 0; break;
-                case "s": this.down = 0; break;
-                case "a": this.left = 0; break;
-                case "d": this.right = 0; break;
+            switch(e.code) {
+                case "KeyW": this.up = 0; break;
+                case "KeyS": this.down = 0; break;
+                case "KeyA": this.left = 0; break;
+                case "KeyD": this.right = 0; break;
             }
         });
 
@@ -82,20 +82,20 @@ export class ImagePlayer {
         this.right = 0;
 
         document.addEventListener("keydown", (e) => {
-            switch(e.key) {
-                case "w": this.up = 1; break;
-                case "s": this.down = 1; break;
-                case "a": this.left = 1; break;
-                case "d": this.right = 1; break;
+            switch(e.code) {
+                case "KeyW": this.up = 1; break;
+                case "KeyS": this.down = 1; break;
+                case "KeyA": this.left = 1; break;
+                case "KeyD": this.right = 1; break;
             }
         });
         
         document.addEventListener("keyup", (e) => {
-            switch(e.key) {
-                case "w": this.up = 0; break;
-                case "s": this.down = 0; break;
-                case "a": this.left = 0; break;
-                case "d": this.right = 0; break;
+            switch(e.code) {
+                case "KeyW": this.up = 0; break;
+                case "KeyS": this.down = 0; break;
+                case "KeyA": this.left = 0; break;
+                case "KeyD": this.right = 0; break;
             }
         });
 
