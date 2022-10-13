@@ -4,8 +4,8 @@ import { CubePlayer, ImagePlayer } from "./players.js";
 import { Sprite } from "./sprites.js";
 import { imgBob, okComputerBg } from "./textureManager.js";
 
-const WIDTH = 256;
-const HEIGHT = 256;
+const WIDTH = 512;
+const HEIGHT = 512;
 
 const [ canvasBg, canvasMain ] = Array.from(document.querySelectorAll("canvas"));
 
@@ -45,17 +45,17 @@ var viewport = new Viewport(0, 0, 32);
 //  Just uncomment one of these samples to play:
 
 // var player = new CubePlayer(128, 64, 64, 64, 2, "pink", 100, ctxMain, viewport, playerList);
-var bg = new Sprite(0, 0, 2000, 2000, okComputerBg, ctxBg, viewport, spriteList);
-//  var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxMain, viewport, playerList);
+// var bg = new Sprite(0, 0, 2000, 2000, okComputerBg, ctxBg, viewport, spriteList);
+var player = new ImagePlayer(256, 256, 128, 128, 2, imgBob, 100, ctxMain, viewport, playerList);
 
 // JANOWY GRACZ
- var player2 = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctx1, playerList);
+// var player = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxMain, viewport, playerList);
 
 
 //GAME LOOP THINGS
 const update = () => {
     playerList.forEach(e => e.update());
-    viewport.move(player.x + player.w/2 - WIDTH/2, player.y + player.h/2 - HEIGHT/2);
+    // viewport.move(player.x + player.w/2 - WIDTH/2, player.y + player.h/2 - HEIGHT/2);
     // BIEŻNIA!!!!
     // viewport.x++
 }
@@ -77,4 +77,5 @@ const animate = () => {
     window.requestAnimationFrame(animate);
 }
 
+console.log(player);
 animate();

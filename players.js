@@ -116,7 +116,7 @@ export class ImagePlayer {
     }
 
     draw() {
-        this.ctx.drawImage(this.image, this.x - this.viewport, this.y - this.viewport, this.w, this.h);
+        this.ctx.drawImage(this.image, this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
     }
 
     addHp(_healthPoints) {
