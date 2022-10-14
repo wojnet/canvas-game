@@ -1,5 +1,5 @@
 export class CubePlayer {
-    constructor(_x, _y, _w, _h, _speed, _color, _hp, _ctx, _viewport, _list) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _color, _hp, _ctx, _viewport, _list) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -9,10 +9,12 @@ export class CubePlayer {
         // this.prevW;
         // this.prevH;
         this.speed = _speed;
+        this.isVisible = _isVisible;
         this.color = _color;
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+
         this.up = 0;
         this.down = 0;
         this.left = 0;
@@ -56,26 +58,34 @@ export class CubePlayer {
     }
 
     draw() {
-        this.ctx.fillStyle = this.color;
-        this.ctx.fillRect(this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
+        if (this.isVisible) {
+            this.ctx.fillStyle = this.color;
+            this.ctx.fillRect(this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
+        }
     }
 
     addHp(_healthPoints) {
         this.hp += _healthPoints;
     }
+
+    changeOption(_property, _value) {
+        this[_property] = _value;
+    }
 };
 
 export class ImagePlayer {
-    constructor(_x, _y, _w, _h, _speed, _image, _hp, _ctx, _viewport, _list) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _image, _hp, _ctx, _viewport, _list) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
         this.h = _h;
         this.speed = _speed;
+        this.isVisible = _isVisible;
         this.image = _image;
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+
         this.up = 0;
         this.down = 0;
         this.left = 0;
@@ -116,10 +126,14 @@ export class ImagePlayer {
     }
 
     draw() {
-        this.ctx.drawImage(this.image, this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
+        if (this.isVisible) this.ctx.drawImage(this.image, this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
     }
 
     addHp(_healthPoints) {
         this.hp += _healthPoints;
+    }
+
+    changeOption(_property, _value) {
+        this[_property] = _value;
     }
 };

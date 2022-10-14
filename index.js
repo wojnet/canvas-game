@@ -2,9 +2,9 @@
 import { Viewport } from "./viewport.js";
 import { CubePlayer, ImagePlayer } from "./players.js";
 import { Sprite } from "./sprites.js";
-import { imgBob, okComputerBg } from "./textureManager.js";
+import { textures } from "./textureManager.js";
 
-const WIDTH = 512;
+const WIDTH = 768;
 const HEIGHT = 512;
 
 const [ canvasBg, canvasMain ] = Array.from(document.querySelectorAll("canvas"));
@@ -34,30 +34,20 @@ var spriteList = [];
 var viewport = new Viewport(0, 0, 32);
 
 //  CREATING PLAYER(S)
-//  ==================
-//  You can use either CubePlayer or ImagePlayer class
-//  to create controlable (WASD) players!
-//  
-//  Parameters:
-//  new CubePlayer(x, y, width, height, speed, color, hp, context, viewport, defaultPlayerList);
-//  new ImagePlayer(x, y, width, height, speed, texture, hp, context, viewport, defaultPlayerList);
-//
-//  Just uncomment one of these samples to play:
+var bg = new Sprite(0, 0, 1000, 1000, textures.okComputerBg, ctxBg, viewport, spriteList);
 
-// var player = new CubePlayer(128, 64, 64, 64, 2, "pink", 100, ctxMain, viewport, playerList);
-// var bg = new Sprite(0, 0, 2000, 2000, okComputerBg, ctxBg, viewport, spriteList);
-var player = new ImagePlayer(256, 256, 128, 128, 2, imgBob, 100, ctxMain, viewport, playerList);
-
-// JANOWY GRACZ
-// var player = new ImagePlayer(256, 256, 32, 32, 2, imgBob, 100, ctxMain, viewport, playerList);
+// var player = new ImagePlayer(256, 256, 128, 128, 10, true, textures.imgBob, 100, ctxMain, viewport, playerList);
+var player = new CubePlayer(64, 64, 64, 64, 3, true, "pink", 100, ctxMain, viewport, playerList);
+viewport.follow = player;
+viewport. isFollowing = true;
+viewport.padding = 20;
 
 
 //GAME LOOP THINGS
 const update = () => {
     playerList.forEach(e => e.update());
+    viewport.update();
     // viewport.move(player.x + player.w/2 - WIDTH/2, player.y + player.h/2 - HEIGHT/2);
-    // BIEŻNIA!!!!
-    // viewport.x++
 }
 
 const draw = () => {
@@ -77,5 +67,4 @@ const animate = () => {
     window.requestAnimationFrame(animate);
 }
 
-console.log(player);
 animate();
