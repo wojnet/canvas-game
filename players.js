@@ -1,19 +1,19 @@
 export class CubePlayer {
-    constructor(_x, _y, _w, _h, _speed, _isVisible, _color, _hp, _ctx, _viewport, _list) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _color, _hp, _ctx, _viewport, _list, _hitboxList) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
         this.h = _h;
-        // this.prevX;
-        // this.prevY;
-        // this.prevW;
-        // this.prevH;
+        this.prevX = _x;
+        this.prevY = _y;
+
         this.speed = _speed;
         this.isVisible = _isVisible;
         this.color = _color;
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+        this.hitboxList = _hitboxList;
 
         this.up = 0;
         this.down = 0;
@@ -41,7 +41,26 @@ export class CubePlayer {
         _list.push(this);
     }
 
+    hitboxCheck() {
+        if (this.hitboxList.length > 0) {
+            this.hitboxList.forEach((e, i) => {
+                if ( // REALLY BIG IF
+                    this.x + this.w >= e.x &&
+                    this.x <=e.x + e.w &&
+                    this.y + this.h >= e.y &&
+                    this.y <=e.y + e.h
+                ) {
+                    console.log("Collision detected");
+                }
+            });
+        }
+    }
+
     update() {
+
+        this.prevX = this.x;
+        this.prevY = this.y;
+
         let hmove = this.right - this.left;
         let vmove = this.down - this.up;
 
@@ -55,6 +74,8 @@ export class CubePlayer {
             this.x += hmove * this.speed;
             this.y += vmove * this.speed;
         }
+
+        this.hitboxCheck();
     }
 
     draw() {
@@ -74,17 +95,21 @@ export class CubePlayer {
 };
 
 export class ImagePlayer {
-    constructor(_x, _y, _w, _h, _speed, _isVisible, _image, _hp, _ctx, _viewport, _list) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _image, _hp, _ctx, _viewport, _list, _hitboxList) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
         this.h = _h;
+        this.prevX = _x;
+        this.prevY = _y;
+
         this.speed = _speed;
         this.isVisible = _isVisible;
         this.image = _image;
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+        this.hitboxList = _hitboxList;
 
         this.up = 0;
         this.down = 0;
@@ -112,7 +137,26 @@ export class ImagePlayer {
         _list.push(this);
     }
 
+    hitboxCheck() {
+        if (this.hitboxList.length > 0) {
+            this.hitboxList.forEach((e, i) => {
+                if ( // REALLY BIG IF
+                    this.x + this.w >= e.x &&
+                    this.x <=e.x + e.w &&
+                    this.y + this.h >= e.y &&
+                    this.y <=e.y + e.h
+                ) {
+                    console.log("Collision detected");
+                }
+            });
+        }
+    }
+
     update() {
+
+        this.prevX = this.x;
+        this.prevY = this.y;
+
         let hmove = this.right - this.left;
         let vmove = this.down - this.up;
 
@@ -123,6 +167,8 @@ export class ImagePlayer {
             this.x += hmove * this.speed;
             this.y += vmove * this.speed;
         }
+
+        this.hitboxCheck();
     }
 
     draw() {
