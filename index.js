@@ -2,6 +2,7 @@
 import { Viewport } from "./viewport.js";
 import { CubePlayer, ImagePlayer } from "./players.js";
 import { Sprite } from "./sprites.js";
+import { Hitbox } from "./blocks.js";
 import { textures } from "./textureManager.js";
 
 const WIDTH = 384;
@@ -26,6 +27,7 @@ var playerList = [];
 var entityList = [];
 var blockList = [];
 var spriteList = [];
+var hitboxList = [];
 
 //  CREATING VIEWPORT
 //  =================
