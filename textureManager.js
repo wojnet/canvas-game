@@ -1,7 +1,12 @@
 var imgBob = new Image();
-imgBob.src = "./assets/textures/bob2.png";
-
 var okComputerBg = new Image();
-okComputerBg.src = "./assets/textures/bg.jpg";
 
-export { imgBob, okComputerBg };
+const textures = {
+    imgBob:         imgBob,
+    okComputerBg:   okComputerBg
+};
+
+textures.okComputerBg.src = "./assets/textures/bg.jpg";
+textures.imgBob.src = "./assets/textures/bob2.png";
+
+export { textures };
