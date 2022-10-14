@@ -4,8 +4,8 @@ import { CubePlayer, ImagePlayer } from "./players.js";
 import { Sprite } from "./sprites.js";
 import { textures } from "./textureManager.js";
 
-const WIDTH = 768;
-const HEIGHT = 512;
+const WIDTH = 384;
+const HEIGHT = 384;
 
 const [ canvasBg, canvasMain ] = Array.from(document.querySelectorAll("canvas"));
 
@@ -31,16 +31,16 @@ var spriteList = [];
 //  =================
 //  Parameters:
 //  new Viewport(x, y, padding);
-var viewport = new Viewport(0, 0, 32);
+var viewport = new Viewport(0, 0, WIDTH, HEIGHT, 32);
 
 //  CREATING PLAYER(S)
 var bg = new Sprite(0, 0, 1000, 1000, textures.okComputerBg, ctxBg, viewport, spriteList);
 
 // var player = new ImagePlayer(256, 256, 128, 128, 10, true, textures.imgBob, 100, ctxMain, viewport, playerList);
-var player = new CubePlayer(64, 64, 64, 64, 3, true, "pink", 100, ctxMain, viewport, playerList);
+var player = new CubePlayer(64, 64, 64, 64, 10, true, "pink", 100, ctxMain, viewport, playerList);
 viewport.follow = player;
 viewport. isFollowing = true;
-viewport.padding = 20;
+viewport.padding = 160;
 
 
 //GAME LOOP THINGS
