@@ -14,6 +14,7 @@ export class CubePlayer {
         this.ctx = _ctx;
         this.viewport = _viewport;
         this.hitboxList = _hitboxList;
+        this.goBackStep = 0.1;
 
         this.up = 0;
         this.down = 0;
@@ -41,21 +42,64 @@ export class CubePlayer {
         _list.push(this);
     }
 
-    hitboxCheck() {
-        if (this.hitboxList.length > 0) {
-            this.hitboxList.forEach((e, i) => {
-                if ( // REALLY BIG IF
-                    this.x + this.w >= e.x &&
-                    this.x <=e.x + e.w &&
-                    this.y + this.h >= e.y &&
-                    this.y <=e.y + e.h
-                ) {
-                    this.x = this.prevX;
-                    this.y = this.prevY;
-                }
-            });
-        }
+    hitboxCheck(_x, _y) {
+        let isColliding = false;
+        this.hitboxList.forEach((e, i) => {
+            if ( // REALLY BIG IF
+                _x + this.w >= e.x &&
+                _x <=e.x + e.w &&
+                _y + this.h >= e.y &&
+                _y <=e.y + e.h
+            ) {
+                isColliding = true;
+            }
+        });
+        return isColliding;
     }
+
+    hitboxFix() {
+        let dx = this.x - this.prevX;
+        let dy = this.y - this.prevY;
+
+        let distanceToGoBackX = 0;
+        let distanceToGoBackY = 0; 
+
+        if (dx >= 0) {
+            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x - i, this.y)) {
+                    distanceToGoBackX = i * (-1);
+                    break;
+                }
+            }
+        } else {
+            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x + i, this.y)) {
+                    distanceToGoBackX = i;
+                    break;
+                }
+            }
+        }
+
+        if (dy >= 0 && distanceToGoBackX == 0) {
+            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x, this.y - i)) {
+                    distanceToGoBackY = i * (-1);
+                    break;
+                }
+            }
+        } else {
+            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x, this.y + i)) {
+                    distanceToGoBackY = i;
+                    break;
+                }
+            }
+        }
+
+        this.x += distanceToGoBackX;
+        this.y += distanceToGoBackY;
+    }
+
 
     update() {
 
@@ -65,18 +109,19 @@ export class CubePlayer {
         let hmove = this.right - this.left;
         let vmove = this.down - this.up;
 
-        // this.prevX = this.x;
-        // this.prevY = this.y;
-
         if (hmove != 0 && vmove != 0) {
-            this.x += hmove * this.speed / 1.4 /*1.4142 just for optimization*/;
-            this.y += vmove * this.speed / 1.4 /*1.4142*/;
+            this.x += hmove * this.speed / 1.5 /*1.4142 just for optimization*/;
+            this.y += vmove * this.speed / 1.5 /*1.4142*/;
         } else {
             this.x += hmove * this.speed;
             this.y += vmove * this.speed;
         }
 
-        this.hitboxCheck();
+        if (this.hitboxList.length > 0) {
+            if (this.hitboxCheck(this.x, this.y)) {
+                this.hitboxFix();
+            }
+        }
     }
 
     draw() {
@@ -111,6 +156,7 @@ export class ImagePlayer {
         this.ctx = _ctx;
         this.viewport = _viewport;
         this.hitboxList = _hitboxList;
+        this.goBackStep = 0.1;
 
         this.up = 0;
         this.down = 0;
@@ -138,16 +184,64 @@ export class ImagePlayer {
         _list.push(this);
     }
 
-    hitboxCheck() {
-        if (this.hitboxList.length > 0) {
-            this.hitboxList.forEach((e, i) => {
-                if (this.x+this.w>=e.x&&this.x<=e.x+e.w&&this.y+this.h>=e.y&&this.y<=e.y+e.h) {
-                    this.x = this.prevX;
-                    this.y = this.prevY;
-                }
-            });
-        }
+    hitboxCheck(_x, _y) {
+        let isColliding = false;
+        this.hitboxList.forEach((e, i) => {
+            if ( // REALLY BIG IF
+                _x + this.w >= e.x &&
+                _x <=e.x + e.w &&
+                _y + this.h >= e.y &&
+                _y <=e.y + e.h
+            ) {
+                isColliding = true;
+            }
+        });
+        return isColliding;
     }
+
+    hitboxFix() {
+        let dx = this.x - this.prevX;
+        let dy = this.y - this.prevY;
+
+        let distanceToGoBackX = 0;
+        let distanceToGoBackY = 0; 
+
+        if (dx >= 0) {
+            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x - i, this.y)) {
+                    distanceToGoBackX = i * (-1);
+                    break;
+                }
+            }
+        } else {
+            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x + i, this.y)) {
+                    distanceToGoBackX = i;
+                    break;
+                }
+            }
+        }
+
+        if (dy >= 0 && distanceToGoBackX == 0) {
+            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x, this.y - i)) {
+                    distanceToGoBackY = i * (-1);
+                    break;
+                }
+            }
+        } else {
+            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
+                if(!this.hitboxCheck(this.x, this.y + i)) {
+                    distanceToGoBackY = i;
+                    break;
+                }
+            }
+        }
+
+        this.x += distanceToGoBackX;
+        this.y += distanceToGoBackY;
+    }
+
 
     update() {
 
@@ -158,14 +252,18 @@ export class ImagePlayer {
         let vmove = this.down - this.up;
 
         if (hmove != 0 && vmove != 0) {
-            this.x += hmove * this.speed / 1.4 /*1.4142 just for optimization*/;
-            this.y += vmove * this.speed / 1.4 /*1.4142*/;
+            this.x += hmove * this.speed / 1.5 /*1.4142 just for optimization*/;
+            this.y += vmove * this.speed / 1.5 /*1.4142*/;
         } else {
             this.x += hmove * this.speed;
             this.y += vmove * this.speed;
         }
 
-        this.hitboxCheck();
+        if (this.hitboxList.length > 0) {
+            if (this.hitboxCheck(this.x, this.y)) {
+                this.hitboxFix();
+            }
+        }
     }
 
     draw() {
