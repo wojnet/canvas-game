@@ -5,16 +5,17 @@
 // WHEN THE PLAYER MAKES THE VIEWPORT MOVE
 
 export class Viewport {
-    constructor(_x, _y, _w, _h, _padding) {
+    constructor(_x, _y, _w, _h, _list) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
         this.h = _h;
-        this.padding = _padding;
 
         this.follow = null;
         this.isFollowing = false;
         this.padding = 0;
+
+        _list.push(this);
     }
 
     move(_x, _y) {
