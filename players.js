@@ -50,7 +50,8 @@ export class CubePlayer {
                     this.y + this.h >= e.y &&
                     this.y <=e.y + e.h
                 ) {
-                    console.log("Collision detected");
+                    this.x = this.prevX;
+                    this.y = this.prevY;
                 }
             });
         }
@@ -140,13 +141,9 @@ export class ImagePlayer {
     hitboxCheck() {
         if (this.hitboxList.length > 0) {
             this.hitboxList.forEach((e, i) => {
-                if ( // REALLY BIG IF
-                    this.x + this.w >= e.x &&
-                    this.x <=e.x + e.w &&
-                    this.y + this.h >= e.y &&
-                    this.y <=e.y + e.h
-                ) {
-                    console.log("Collision detected");
+                if (this.x+this.w>=e.x&&this.x<=e.x+e.w&&this.y+this.h>=e.y&&this.y<=e.y+e.h) {
+                    this.x = this.prevX;
+                    this.y = this.prevY;
                 }
             });
         }
