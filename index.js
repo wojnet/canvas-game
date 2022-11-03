@@ -7,6 +7,7 @@ import { textures } from "./textureManager.js";
 
 const WIDTH = 384;
 const HEIGHT = 384;
+const SHOWHITBOXES = false;
 
 //LISTS OF GAME OBJECTS
 var playerList = [];
@@ -47,12 +48,14 @@ var viewport2 = new Viewport(0, 0, WIDTH, HEIGHT, viewportList);
 currentViewport = viewport;
 
 //  CREATING PLAYER(S)
-var player = new CubePlayer(64, 64, 64, 64, 3, true, "blue", 100, ctxMain, currentViewport, playerList, hitboxList);
+var player = new ImagePlayer(64, 64, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 // var player = new ImagePlayer(64, 64, 64, 64, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 
 // CREATING HITBOXES (later they will load from map)
-var hitbox = new Hitbox(64, 192, 64, 64, ctxBlocks, currentViewport, hitboxList);
-var hitbox2 = new Hitbox(192, 64, 128, 64, ctxBlocks, currentViewport, hitboxList);
+new Hitbox(64, 192, 192, 64, ctxBlocks, currentViewport, true, hitboxList);
+
+new Sprite(64, 192, 192, 64, textures.okComputerBg, ctxBlocks, currentViewport, spriteList);
+
 
 //OPTIONS
 viewport.follow = player;
@@ -78,7 +81,7 @@ const draw = () => {
 
     playerList.forEach(e => e.draw());
     spriteList.forEach(e => e.draw());
-    hitboxList.forEach(e => e.draw());
+    if (SHOWHITBOXES) hitboxList.forEach(e => e.draw());
 }
 
 const animate = () => {

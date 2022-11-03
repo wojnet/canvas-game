@@ -57,50 +57,6 @@ export class CubePlayer {
         return isColliding;
     }
 
-    hitboxFix() {
-        let dx = this.x - this.prevX;
-        let dy = this.y - this.prevY;
-
-        let distanceToGoBackX = 0;
-        let distanceToGoBackY = 0; 
-
-        if (dx >= 0) {
-            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x - i, this.y)) {
-                    distanceToGoBackX = i * (-1);
-                    break;
-                }
-            }
-        } else {
-            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x + i, this.y)) {
-                    distanceToGoBackX = i;
-                    break;
-                }
-            }
-        }
-
-        if (dy >= 0 && distanceToGoBackX == 0) {
-            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x, this.y - i)) {
-                    distanceToGoBackY = i * (-1);
-                    break;
-                }
-            }
-        } else {
-            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x, this.y + i)) {
-                    distanceToGoBackY = i;
-                    break;
-                }
-            }
-        }
-
-        this.x += distanceToGoBackX;
-        this.y += distanceToGoBackY;
-    }
-
-
     update() {
 
         this.prevX = this.x;
@@ -110,18 +66,31 @@ export class CubePlayer {
         let vmove = this.down - this.up;
 
         if (hmove != 0 && vmove != 0) {
-            this.x += hmove * this.speed / 1.5 /*1.4142 just for optimization*/;
-            this.y += vmove * this.speed / 1.5 /*1.4142*/;
-        } else {
-            this.x += hmove * this.speed;
-            this.y += vmove * this.speed;
+            hmove /= 1.5;
+            vmove /= 1.5;
         }
 
         if (this.hitboxList.length > 0) {
-            if (this.hitboxCheck(this.x, this.y)) {
-                this.hitboxFix();
+
+            //HORIZONTAL CHECK
+            if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
+                while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
+                    this.x += this.right - this.left;
+                }
+                hmove = 0;
+            }
+
+            //VERTICAL CHECK
+            if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
+                while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
+                    this.y += this.down - this.up;
+                }
+                vmove = 0;
             }
         }
+
+        this.x += hmove * this.speed;
+        this.y += vmove * this.speed;
     }
 
     draw() {
@@ -199,50 +168,6 @@ export class ImagePlayer {
         return isColliding;
     }
 
-    hitboxFix() {
-        let dx = this.x - this.prevX;
-        let dy = this.y - this.prevY;
-
-        let distanceToGoBackX = 0;
-        let distanceToGoBackY = 0; 
-
-        if (dx >= 0) {
-            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x - i, this.y)) {
-                    distanceToGoBackX = i * (-1);
-                    break;
-                }
-            }
-        } else {
-            for (let i = 1; i < Math.abs(dx)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x + i, this.y)) {
-                    distanceToGoBackX = i;
-                    break;
-                }
-            }
-        }
-
-        if (dy >= 0 && distanceToGoBackX == 0) {
-            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x, this.y - i)) {
-                    distanceToGoBackY = i * (-1);
-                    break;
-                }
-            }
-        } else {
-            for (let i = 1; i < Math.abs(dy)+1; i += this.goBackStep) {
-                if(!this.hitboxCheck(this.x, this.y + i)) {
-                    distanceToGoBackY = i;
-                    break;
-                }
-            }
-        }
-
-        this.x += distanceToGoBackX;
-        this.y += distanceToGoBackY;
-    }
-
-
     update() {
 
         this.prevX = this.x;
@@ -252,18 +177,31 @@ export class ImagePlayer {
         let vmove = this.down - this.up;
 
         if (hmove != 0 && vmove != 0) {
-            this.x += hmove * this.speed / 1.5 /*1.4142 just for optimization*/;
-            this.y += vmove * this.speed / 1.5 /*1.4142*/;
-        } else {
-            this.x += hmove * this.speed;
-            this.y += vmove * this.speed;
+            hmove /= 1.5;
+            vmove /= 1.5;
         }
 
         if (this.hitboxList.length > 0) {
-            if (this.hitboxCheck(this.x, this.y)) {
-                this.hitboxFix();
+
+            //HORIZONTAL CHECK
+            if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
+                while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
+                    this.x += this.right - this.left;
+                }
+                hmove = 0;
+            }
+
+            //VERTICAL CHECK
+            if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
+                while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
+                    this.y += this.down - this.up;
+                }
+                vmove = 0;
             }
         }
+
+        this.x += hmove * this.speed;
+        this.y += vmove * this.speed;
     }
 
     draw() {
