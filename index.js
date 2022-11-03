@@ -51,8 +51,7 @@ var player = new CubePlayer(64, 64, 64, 64, 3, true, "blue", 100, ctxMain, curre
 // var player = new ImagePlayer(64, 64, 64, 64, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 
 // CREATING HITBOXES (later they will load from map)
-var hitbox = new Hitbox(64, 192, 64, 64, ctxBlocks, currentViewport, hitboxList);
-var hitbox2 = new Hitbox(192, 64, 128, 64, ctxBlocks, currentViewport, hitboxList);
+new Hitbox(64, 192, 192, 64, ctxBlocks, currentViewport, true, hitboxList);
 
 //OPTIONS
 viewport.follow = player;
