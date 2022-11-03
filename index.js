@@ -19,7 +19,7 @@ var viewportList = [];
 
 var currentViewport;
 
-const [ canvasBg, canvasMain, canvasBlocks ] = Array.from(document.querySelectorAll("canvas"));
+const [ canvasBg, canvasBlocks, canvasMain ] = Array.from(document.querySelectorAll("canvas"));
 
 //CANVASBG CONFIG
 canvasBg.width = WIDTH;
@@ -27,17 +27,16 @@ canvasBg.height = HEIGHT;
 const ctxBg = canvasBg.getContext("2d");
 canvasBg.style.opacity = 0.5;
 
-//CANVASMAIN "NEAR" CONFIG
-
-canvasMain.width = WIDTH;
-canvasMain.height = HEIGHT;
-const ctxMain = canvasMain.getContext("2d");
-
 //CANVASBLOCKS "HITBOX AND EVENTS" CONFIG
 canvasBlocks.width = WIDTH;
 canvasBlocks.height = HEIGHT;
 const ctxBlocks = canvasBlocks.getContext("2d");
 canvasBlocks.style.opacity = 0.75;
+
+//CANVASMAIN "NEAR" CONFIG
+canvasMain.width = WIDTH;
+canvasMain.height = HEIGHT;
+const ctxMain = canvasMain.getContext("2d");
 
 //  CREATING VIEWPORT
 //  =================
@@ -48,14 +47,43 @@ var viewport2 = new Viewport(0, 0, WIDTH, HEIGHT, viewportList);
 currentViewport = viewport;
 
 //  CREATING PLAYER(S)
-var player = new ImagePlayer(64, 64, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
+var player = new ImagePlayer(128, 128, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 // var player = new ImagePlayer(64, 64, 64, 64, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 
 // CREATING HITBOXES (later they will load from map)
-new Hitbox(64, 192, 192, 64, ctxBlocks, currentViewport, true, hitboxList);
+new Hitbox(0, 0, 320, 64, ctxBlocks, currentViewport, true, hitboxList);
+new Hitbox(0, 64, 64, 256, ctxBlocks, currentViewport, true, hitboxList);
+new Hitbox(64, 256, 64, 64, ctxBlocks, currentViewport, true, hitboxList);
+new Hitbox(192, 256, 64, 64, ctxBlocks, currentViewport, true, hitboxList);
+new Hitbox(256, 64, 64, 256, ctxBlocks, currentViewport, true, hitboxList);
 
-new Sprite(64, 192, 192, 64, textures.okComputerBg, ctxBlocks, currentViewport, spriteList);
+const spriteMap = [
+    [1,1,1,1,1,0,0,0,0,0],
+    [1,2,2,2,1,0,0,0,0,0],
+    [1,2,2,2,1,0,0,0,0,0],
+    [1,2,2,2,1,0,0,0,0,0],
+    [1,1,2,1,1,0,0,0,0,0],
+    [0,0,2,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+]
 
+for (let y = 0; y < spriteMap.length; y++) {
+    for (let x = 0; x < spriteMap[0].length; x++) {
+        switch(spriteMap[y][x]) {
+        case 0:
+            break;
+        case 1:
+            new Sprite(x * 64, y * 64, 64, 64, textures.stone, ctxBlocks, currentViewport, spriteList);
+            break;
+        case 2:
+            new Sprite(x * 64, y * 64, 64, 64, textures.bark, ctxBlocks, currentViewport, spriteList);
+            break;
+        }   
+    }
+}
 
 //OPTIONS
 viewport.follow = player;

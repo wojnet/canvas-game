@@ -45,6 +45,9 @@ export class Viewport {
             if (this.follow.y + this.follow.h > this.y + this.h - this.padding) {
                 this.y = this.follow.y - (this.h - this.padding - this.follow.h);
             }
+
+            // if (this.x < 0) this.x = 0;
+            // if (this.y < 0) this.y = 0;
         }
     }
 };
