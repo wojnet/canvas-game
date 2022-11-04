@@ -1,5 +1,5 @@
 export class CubePlayer {
-    constructor(_x, _y, _w, _h, _speed, _isVisible, _color, _hp, _ctx, _viewport, _list, _hitboxList) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _color, _hp, _ctx, _viewport, _toggle, _list, _hitboxList) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -13,6 +13,7 @@ export class CubePlayer {
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+        this.toggle = _toggle;
         this.hitboxList = _hitboxList;
         this.goBackStep = 0.1;
 
@@ -59,42 +60,46 @@ export class CubePlayer {
 
     update() {
 
-        this.prevX = this.x;
-        this.prevY = this.y;
+        if (this.toggle) {
 
-        let hmove = this.right - this.left;
-        let vmove = this.down - this.up;
+            this.prevX = this.x;
+            this.prevY = this.y;
 
-        if (hmove != 0 && vmove != 0) {
-            hmove /= 1.5;
-            vmove /= 1.5;
-        }
+            let hmove = this.right - this.left;
+            let vmove = this.down - this.up;
 
-        if (this.hitboxList.length > 0) {
-
-            //HORIZONTAL CHECK
-            if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
-                while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
-                    this.x += this.right - this.left;
-                }
-                hmove = 0;
+            if (hmove != 0 && vmove != 0) {
+                hmove /= 1.5;
+                vmove /= 1.5;
             }
 
-            //VERTICAL CHECK
-            if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
-                while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
-                    this.y += this.down - this.up;
-                }
-                vmove = 0;
-            }
-        }
+            if (this.hitboxList.length > 0) {
 
-        this.x += hmove * this.speed;
-        this.y += vmove * this.speed;
+                //HORIZONTAL CHECK
+                if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
+                    while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
+                        this.x += this.right - this.left;
+                    }
+                    hmove = 0;
+                }
+
+                //VERTICAL CHECK
+                if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
+                    while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
+                        this.y += this.down - this.up;
+                    }
+                    vmove = 0;
+                }
+            }
+
+            this.x += hmove * this.speed;
+            this.y += vmove * this.speed;
+
+        }
     }
 
     draw() {
-        if (this.isVisible) {
+        if (this.isVisible && this.toggle) {
             this.ctx.fillStyle = this.color;
             this.ctx.fillRect(this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
         }
@@ -110,7 +115,7 @@ export class CubePlayer {
 };
 
 export class ImagePlayer {
-    constructor(_x, _y, _w, _h, _speed, _isVisible, _image, _hp, _ctx, _viewport, _list, _hitboxList) {
+    constructor(_x, _y, _w, _h, _speed, _isVisible, _image, _hp, _ctx, _viewport, _toggle, _list, _hitboxList) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -124,6 +129,7 @@ export class ImagePlayer {
         this.hp = _hp;
         this.ctx = _ctx;
         this.viewport = _viewport;
+        this.toggle = _toggle;
         this.hitboxList = _hitboxList;
         this.goBackStep = 0.1;
 
@@ -170,42 +176,46 @@ export class ImagePlayer {
 
     update() {
 
-        this.prevX = this.x;
-        this.prevY = this.y;
+        if (this.toggle) {
 
-        let hmove = this.right - this.left;
-        let vmove = this.down - this.up;
+            this.prevX = this.x;
+            this.prevY = this.y;
 
-        if (hmove != 0 && vmove != 0) {
-            hmove /= 1.5;
-            vmove /= 1.5;
-        }
+            let hmove = this.right - this.left;
+            let vmove = this.down - this.up;
 
-        if (this.hitboxList.length > 0) {
-
-            //HORIZONTAL CHECK
-            if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
-                while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
-                    this.x += this.right - this.left;
-                }
-                hmove = 0;
+            if (hmove != 0 && vmove != 0) {
+                hmove /= 1.5;
+                vmove /= 1.5;
             }
 
-            //VERTICAL CHECK
-            if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
-                while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
-                    this.y += this.down - this.up;
-                }
-                vmove = 0;
-            }
-        }
+            if (this.hitboxList.length > 0) {
 
-        this.x += hmove * this.speed;
-        this.y += vmove * this.speed;
+                //HORIZONTAL CHECK
+                if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
+                    while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
+                        this.x += this.right - this.left;
+                    }
+                    hmove = 0;
+                }
+
+                //VERTICAL CHECK
+                if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
+                    while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
+                        this.y += this.down - this.up;
+                    }
+                    vmove = 0;
+                }
+            }
+
+            this.x += hmove * this.speed;
+            this.y += vmove * this.speed;
+
+        }
     }
 
     draw() {
-        if (this.isVisible) this.ctx.drawImage(this.image, this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
+        if (this.isVisible && this.toggle) this.ctx.drawImage(this.image, this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h);
     }
 
     addHp(_healthPoints) {
