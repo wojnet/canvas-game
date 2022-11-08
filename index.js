@@ -49,7 +49,7 @@ var viewport2 = new Viewport(0, 0, WIDTH, HEIGHT, viewportList);
 currentViewport = viewport;
 
 //  CREATING PLAYER(S)
-var player = new ImagePlayer(128, 128, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, false, playerList, hitboxList);
+var player = new ImagePlayer(128, 128, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, true, playerList, hitboxList);
 // var player = new ImagePlayer(64, 64, 64, 64, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 
 // CREATING HITBOXES (later they will load from map)
@@ -90,7 +90,7 @@ const loadRoom = (room) => {
 }
 
 const init = () => {
-    loadRoom(emptyRoom);
+    loadRoom(room1);
 }
 
 //GAME LOOP THINGS
