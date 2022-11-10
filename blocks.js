@@ -30,7 +30,7 @@ export class EventBlock {
     }
 
     draw() {
-        this.ctx.fillStyle = "rgba(127, 255, 127, 2127)";
+        this.ctx.fillStyle = "rgba(127, 255, 127, 127)";
         this.ctx.fillRect(this.x - this.viewport.x, this.y - this.viewport.y, this.w, this.h); 
     }
 }
