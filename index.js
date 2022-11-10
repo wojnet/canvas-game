@@ -52,7 +52,7 @@ var viewport2 = new Viewport(0, 0, WIDTH, HEIGHT, viewportList);
 currentViewport = viewport;
 
 //!!! DODAJ KONTEKST DLA MENU !!!
-var mainMenu = new Menu(0, 0, 192, 256, WIDTH, HEIGHT, ctxMain, currentViewport, false, 0, guiList);
+var mainMenu = new Menu(0, 0, 192, 256, WIDTH, HEIGHT, ctxMain, currentViewport, false, 0, guiList, startGame);
 
 //  CREATING PLAYER(S)
 var player = new CubePlayer(128+16, 128+16, 32, 32, 2, true, "red", 100, ctxMain, currentViewport, false, playerList, hitboxList);
@@ -99,7 +99,7 @@ const loadRoom = (room) => {
 
 const init = () => {
     loadRoom(emptyRoom);
-    mainMenu.on = true;
+    mainMenu.switchToggle();
 
     ctxBg.font = "30px monospace";
     ctxMain.font = "30px monospace";
@@ -143,3 +143,14 @@ const animate = () => {
 
 init();
 animate();
+
+
+
+
+
+
+function startGame() {
+    loadRoom(room1);
+    player.toggle = true;
+    mainMenu.switchToggle();
+}
