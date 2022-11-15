@@ -43,9 +43,9 @@ export class CubePlayer {
         _list.push(this);
     }
 
-    hitboxCheck(_x, _y) {
+    hitboxCheck(_x, _y, _hl) {
         let isColliding = false;
-        this.hitboxList.forEach((e, i) => {
+        _hl.forEach((e, i) => {
             if ( // REALLY BIG IF
                 _x + this.w >= e.x &&
                 _x <=e.x + e.w &&
@@ -58,7 +58,7 @@ export class CubePlayer {
         return isColliding;
     }
 
-    update() {
+    update(_hitboxList, _eventBlockList) {
 
         if (this.toggle) {
 
@@ -73,19 +73,19 @@ export class CubePlayer {
                 vmove /= 1.5;
             }
 
-            if (this.hitboxList.length > 0) {
+            if (_hitboxList.length > 0) {
 
                 //HORIZONTAL CHECK
-                if (this.hitboxCheck(this.x + hmove * this.speed, this.y)) {
-                    while(!this.hitboxCheck(this.x + (this.right - this.left), this.y)) {
+                if (this.hitboxCheck(this.x + hmove * this.speed, this.y, _hitboxList)) {
+                    while(!this.hitboxCheck(this.x + (this.right - this.left), this.y, _hitboxList)) {
                         this.x += this.right - this.left;
                     }
                     hmove = 0;
                 }
 
                 //VERTICAL CHECK
-                if (this.hitboxCheck(this.x, this.y + vmove * this.speed)) {
-                    while(!this.hitboxCheck(this.x, this.y + (this.down - this.up))) {
+                if (this.hitboxCheck(this.x, this.y + vmove * this.speed, _hitboxList)) {
+                    while(!this.hitboxCheck(this.x, this.y + (this.down - this.up), _hitboxList)) {
                         this.y += this.down - this.up;
                     }
                     vmove = 0;
