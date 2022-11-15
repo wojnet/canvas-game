@@ -1,5 +1,5 @@
 export class Menu {
-    constructor(_x, _y, _w, _h, _gameWidth, _gameHeight, _ctx, _viewport, _on, _submenu, _list, _startGame) {
+    constructor(_x, _y, _w, _h, _gameWidth, _gameHeight, _ctx, _viewport, _on, _submenu, _list, _functions) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
@@ -14,7 +14,7 @@ export class Menu {
         this.submenu = _submenu;
         this.submenus = [
             [
-                ["NEW GAME", _startGame],
+                ["NEW GAME", _functions[0]],
                 ["LOAD GAME", () => {this.submenu = 1; this.selected = 0}],
                 ["OPTIONS", () => {this.submenu = 2; this.selected = 0}],
                 ["QUIT GAME", () => { if(confirm("Close?")) window.close() }]

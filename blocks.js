@@ -18,13 +18,14 @@ export class Hitbox {
 };
 
 export class EventBlock {
-    constructor(_x, _y, _w, _h, _ctx, _viewport, _list) {
+    constructor(_x, _y, _w, _h, _ctx, _viewport, _list, _functions) {
         this.x = _x;
         this.y = _y;
         this.w = _w;
         this.h = _h;
         this.ctx = _ctx;
         this.viewport = _viewport;
+        this.functions = _functions;
 
         _list.push(this);
     }

@@ -2,7 +2,7 @@
 import { Viewport } from "./viewport.js";
 import { CubePlayer, ImagePlayer } from "./players.js";
 import { Sprite } from "./sprites.js";
-import { Hitbox } from "./blocks.js";
+import { Hitbox, EventBlock } from "./blocks.js";
 import { Menu } from "./gui.js";
 import { textures } from "./textureManager.js";
 import { plot } from "./plot.js";
@@ -10,7 +10,7 @@ import { emptyRoom, room1 } from "./rooms.js";
 
 const WIDTH = 384;
 const HEIGHT = 384;
-const SHOWHITBOXES = true;
+const SHOWHITBOXES = false;
 
 //LISTS OF GAME OBJECTS
 var playerList = [];
@@ -18,6 +18,7 @@ var entityList = [];
 var blockList = [];
 var spriteList = [];
 var hitboxList = [];
+var eventBlockList = [];
 var viewportList = [];
 var guiList = [];
 
@@ -52,10 +53,10 @@ var viewport2 = new Viewport(0, 0, WIDTH, HEIGHT, viewportList);
 currentViewport = viewport;
 
 //!!! DODAJ KONTEKST DLA MENU !!!
-var mainMenu = new Menu(0, 0, 192, 256, WIDTH, HEIGHT, ctxMain, currentViewport, false, 0, guiList, startGame);
+var mainMenu = new Menu(0, 0, 192, 256, WIDTH, HEIGHT, ctxMain, currentViewport, false, 0, guiList, [startGame]);
 
 //  CREATING PLAYER(S)
-var player = new CubePlayer(128+16, 128+16, 32, 32, 2, true, "red", 100, ctxMain, currentViewport, false, playerList, hitboxList);
+var player = new CubePlayer(0, 0, 32, 32, 2, true, "red", 100, ctxMain, currentViewport, false, playerList, hitboxList);
 // var player = new ImagePlayer(128, 128, 58, 79, 3, true, textures.imgBob, 100, ctxMain, currentViewport, true, playerList, hitboxList);
 // var player = new ImagePlayer(64, 64, 64, 64, 3, true, textures.imgBob, 100, ctxMain, currentViewport, playerList, hitboxList);
 currentPlayer = player;
@@ -67,6 +68,8 @@ currentPlayer = player;
 // new Hitbox(192, 256, 64, 64, ctxBlocks, currentViewport, true, hitboxList);
 // new Hitbox(256, 64, 64, 256, ctxBlocks, currentViewport, true, hitboxList);
 
+
+
 //OPTIONS
 viewport.follow = currentPlayer;
 viewport.isFollowing = true;
@@ -76,18 +79,22 @@ viewport2.follow = currentPlayer;
 viewport2.isFollowing = true;
 viewport2.padding = 30;
 
-const loadRoom = (room) => {
+const loadRoom = (_room, _player, _playerX, _playerY) => {
     entityList = [];
     blockList = [];
     spriteList = [];
     hitboxList = [];
-    for (let y = 0; y < room.length; y++) {
-        for (let x = 0; x < room[0].length; x++) {
-            switch(room[y][x]) {
+    eventBlockList = [];
+    _player.x = _playerX;
+    _player.y = _playerY;
+    for (let y = 0; y < _room.map.length; y++) {
+        for (let x = 0; x < _room.map[0].length; x++) {
+            switch(_room.map[y][x]) {
             case 0:
                 break;
             case 1:
                 new Sprite(x * 64, y * 64, 64, 64, textures.stone, ctxBlocks, currentViewport, spriteList);
+                new Hitbox(x * 64, y * 64, 64, 64, ctxBlocks, currentViewport, true, hitboxList);
                 break;
             case 2:
                 new Sprite(x * 64, y * 64, 64, 64, textures.bark, ctxBlocks, currentViewport, spriteList);
@@ -95,10 +102,17 @@ const loadRoom = (room) => {
             }   
         }
     }
+    _room.execute.forEach(e => {
+        switch(e[0]) {
+            case "eventBlock":
+                new EventBlock(e[1], e[2], e[3], e[4], ctxBlocks, currentViewport, eventBlockList, e[5]);
+                break;
+        }
+    });
 }
 
 const init = () => {
-    loadRoom(emptyRoom);
+    loadRoom(emptyRoom, player, 0, 0);
     mainMenu.switchToggle();
 
     ctxBg.font = "30px monospace";
@@ -116,7 +130,7 @@ const init = () => {
 
 //GAME LOOP THINGS
 const update = () => {
-    playerList.forEach(e => e.update());
+    playerList.forEach(e => e.update(hitboxList, eventBlockList));
     /* viewportList.forEach(e => e.update()); */ currentViewport.update();
     // viewport.move(player.x + player.w/2 - WIDTH/2, player.y + player.h/2 - HEIGHT/2);
 }
@@ -131,6 +145,7 @@ const draw = () => {
     spriteList.forEach(e => e.draw());
     guiList.filter(e => e.on).forEach(e => e.draw());
     if (SHOWHITBOXES) hitboxList.forEach(e => e.draw());
+    eventBlockList.forEach(e => e.draw());
 }
 
 const animate = () => {
@@ -144,13 +159,8 @@ const animate = () => {
 init();
 animate();
 
-
-
-
-
-
 function startGame() {
-    loadRoom(room1);
+    loadRoom(room1, player, 128, 128);
     player.toggle = true;
     mainMenu.switchToggle();
 }
